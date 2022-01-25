@@ -8,97 +8,43 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { WebView } from 'react-native-webview';
-import CookieManager from '@react-native-cookies/cookies';
+import * as React from 'react';
+import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const CustomHeaderWebView = (props:any) => {
-  const { uri, onLoadStart, ...restProps } = props;
-  const [currentURI, setURI] = useState(props.source.uri);
-  const newSource = { ...props.source, uri: currentURI };
-
+function HomeScreen() {
   return (
-    <WebView
-      {...restProps}
-      source={newSource}
-      onShouldStartLoadWithRequest={(request) => {
-        // If we're loading the current URI, allow it to load
-        if (request.url === currentURI) return true;
-        // We're loading a new URL -- change state first
-        setURI(request.url);
-        return false;
-      }}
-      incognito={false}
-      sharedCookiesEnabled={true}
-    />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
   );
-};
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings!</Text>
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
+  );
+}
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  // set a cookie
-  CookieManager.set('https://letsmakeindia.com/test/app.php', {
-    name: 'a_on',
-    value: 'c0a03305b16e4885b51c9cb114d47f65-r',
-    domain: 'letsmakeindia.com',
-    path: '/',
-    version: '1',
-    expires: '2022-05-30T12:30:00.00-05:00'
-  }).then((done) => {
-    console.log('CookieManager.set =>', done);
-  });
-
-  CookieManager.set('https://letsmakeindia.com/test/app.php', {
-    name: 'r_t',
-    value: 'c0a03305b16e4885b51c9cb114d47f65-r',
-    domain: 'letsmakeindia.com',
-    path: '/',
-    version: '1',
-    expires: '2022-05-30T12:30:00.00-05:00'
-  }).then((done) => {
-    console.log('CookieManager.set =>', done);
-  });
-
-  // Get cookies for a url
-  CookieManager.get('https://letsmakeindia.com/test/app.php')
-  .then((cookies) => {
-    console.log('CookieManager.get =>', cookies);
-  });
-
-
-
   return (
-    <CustomHeaderWebView
-      source={{
-        uri: 'https://letsmakeindia.com/test/app.php',
-        // headers: {
-        //   'Cookie': 'a_on=c0a03305b16e4885b51c9cb114d47f65-r;r_t=c0a03305b16e4885b51c9cb114d47f65-r',
-        //   //'Cookie': 'a_on=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;r_t=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;',
-        // },
-      }}
-    />
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 };
 
