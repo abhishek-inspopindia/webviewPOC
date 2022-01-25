@@ -10,11 +10,15 @@
 
 import React, { useState } from 'react';
 import {
+  Alert,
+  Modal,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableHighlight,
   useColorScheme,
   View,
 } from 'react-native';
@@ -87,18 +91,132 @@ const App = () => {
     console.log('CookieManager.get =>', cookies);
   });
 
+  const styles = StyleSheet.create({
+    openChatButton: {
+      backgroundColor: '#0cbaba',
+      borderColor: '#0cbaba',
+      borderWidth: 1,
+      height: 64,
+      width: 64,
+      borderRadius: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      bottom: 10,
+      right:10,
+      shadowColor: "#380036",
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 0
+      },
+      elevation: 5
+    },
+    closeChatButton: {
+      backgroundColor: '#0cbaba',
+      borderColor: '#0cbaba',
+      borderWidth: 1,
+      height: 48,
+      width: 48,
+      borderRadius: 24,
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      bottom: 10,
+      right:10,
+      shadowColor: "#380036",
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+          height: 1,
+          width: 0
+      },
+      elevation: 5
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 0
+    },
+    modalView: {
+      width: '98%',
+      height: '98%',
+      margin: 0,
+      backgroundColor: "white",
+      borderRadius: 10,
+      padding: 10,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 2,
+      elevation: 5
+    },
+    button: {
+      borderRadius: 3,
+      padding: 10,
+      elevation: 2
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    view: {
+      alignSelf: 'stretch',
+      flex: 1,
+    }
+  });
 
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <CustomHeaderWebView
-      source={{
-        uri: 'https://letsmakeindia.com/test/app.php',
-        // headers: {
-        //   'Cookie': 'a_on=c0a03305b16e4885b51c9cb114d47f65-r;r_t=c0a03305b16e4885b51c9cb114d47f65-r',
-        //   //'Cookie': 'a_on=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;r_t=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;',
-        // },
-      }}
-    />
+    <View style={{ flex: 1}}>
+      <CustomHeaderWebView
+        source={{
+          uri: 'https://www.google.com/',
+        }}
+      />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.view}> 
+          <WebView source = {{uri: 'https://letsmakeindia.com/test/chat.php'}} />
+          <View style={{position:'absolute',top:0,right:0,marginTop:34,marginRight:0,zIndex:1,height:24,width:24}}>
+            <TouchableHighlight 
+            style={styles.closeChatButton}
+            underlayColor='#0cbaba' 
+            onPress={() => setModalVisible(false)}>
+            <Text style={{fontSize: 24, color: 'black'}}>X</Text>
+          </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={{position:'absolute',right:0,bottom:0,marginBottom:10,marginRight:10,zIndex:1,height:64,width:64}}>
+        <TouchableHighlight 
+          style={styles.openChatButton}
+          underlayColor='#0cbaba' 
+          onPress={() => setModalVisible(true)}>
+          <Text style={{fontSize: 24, color: 'black'}}>💬</Text>
+        </TouchableHighlight>
+      </View>
+    </View>
   );
 };
 
