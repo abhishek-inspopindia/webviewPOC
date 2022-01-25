@@ -92,6 +92,16 @@ const App = () => {
   });
 
   const styles = StyleSheet.create({
+    openChatButtonContainer: {
+      position:'absolute',
+      right:0,
+      bottom:0,
+      marginBottom:10,
+      marginRight:10,
+      zIndex:1,
+      height:64,
+      width:64
+    },
     openChatButton: {
       backgroundColor: '#0cbaba',
       borderColor: '#0cbaba',
@@ -113,26 +123,33 @@ const App = () => {
       },
       elevation: 5
     },
-    closeChatButton: {
+    modalActionBar: {
+      position:'absolute',
+      top:0,
+      right:0,
+      marginTop:0,
+      marginRight:0,
+      zIndex:1,
+      height:52,
+      width: '100%',
       backgroundColor: '#0cbaba',
       borderColor: '#0cbaba',
-      borderWidth: 1,
+      elevation: 5
+    },
+    closeChatButton: {
+      backgroundColor: 'transparent',
       height: 48,
       width: 48,
-      borderRadius: 24,
       alignItems: 'center',
       justifyContent: 'center',
       position: 'absolute',
-      bottom: 10,
-      right:10,
-      shadowColor: "#380036",
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
-      shadowOffset: {
-          height: 1,
-          width: 0
-      },
-      elevation: 5
+      bottom: 0,
+      right:0,
+    },
+    modalCloseBtnText: {
+      fontSize: 24, 
+      color: 'black', 
+      fontWeight: 'bold'
     },
     centeredView: {
       flex: 1,
@@ -197,18 +214,18 @@ const App = () => {
       >
         <View style={styles.view}> 
           <WebView source = {{uri: 'https://letsmakeindia.com/test/chat.php'}} />
-          <View style={{position:'absolute',top:0,right:0,marginTop:34,marginRight:0,zIndex:1,height:24,width:24}}>
+          <View style={styles.modalActionBar}>
             <TouchableHighlight 
-            style={styles.closeChatButton}
-            underlayColor='#0cbaba' 
-            onPress={() => setModalVisible(false)}>
-            <Text style={{fontSize: 24, color: 'black'}}>X</Text>
-          </TouchableHighlight>
+              style={styles.closeChatButton}
+              underlayColor='#0cbaba' 
+              onPress={() => setModalVisible(false)}>
+              <Text style={styles.modalCloseBtnText}>✕</Text>
+            </TouchableHighlight>
           </View>
         </View>
       </Modal>
 
-      <View style={{position:'absolute',right:0,bottom:0,marginBottom:10,marginRight:10,zIndex:1,height:64,width:64}}>
+      <View style={styles.openChatButtonContainer}>
         <TouchableHighlight 
           style={styles.openChatButton}
           underlayColor='#0cbaba' 
