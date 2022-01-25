@@ -148,7 +148,7 @@ const App = () => {
     },
     modalCloseBtnText: {
       fontSize: 24, 
-      color: 'black', 
+      color: 'white', 
       fontWeight: 'bold'
     },
     centeredView: {
@@ -215,6 +215,9 @@ const App = () => {
         <View style={styles.view}> 
           <WebView source = {{uri: 'https://letsmakeindia.com/test/chat.php'}} />
           <View style={styles.modalActionBar}>
+            <Text style={{flex:1,alignItems: 'center',justifyContent: 'center', height:90, fontSize: 20, fontWeight: 'bold', padding: 10, color: 'white'}}>
+              Chat Support
+            </Text>
             <TouchableHighlight 
               style={styles.closeChatButton}
               underlayColor='#0cbaba' 
