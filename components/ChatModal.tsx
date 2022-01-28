@@ -7,6 +7,7 @@ import styles from './ChatModal.Style';
 
 function ChatModal() {
   const [modalVisible, setModalVisible] = useState(false);
+  
   return (
     <View>
       <Modal
@@ -14,24 +15,28 @@ function ChatModal() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
+          //Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.modalContainer}> 
-          <WebView source = {{uri: 'https://letsmakeindia.com/test/chat.php'}} />
+          {/* Modal Header */}
           <View style={styles.modalHeader}>
             <Text style={styles.modalHeaderTitle}>Chat Support</Text>
             <TouchableHighlight 
               style={styles.btnCloseChat}
-              underlayColor='#0cbaba' 
+              underlayColor='#0cbaba'
               onPress={() => setModalVisible(false)}>
               <Text style={styles.modalCloseBtnText}>✕</Text>
             </TouchableHighlight>
           </View>
+
+          {/* Modal Body */}
+          <WebView source = {{uri: 'https://letsmakeindia.com/test/chat.php'}} />
         </View>
       </Modal>
-
+      
+      {/* Modal Trigger Button */}
       <View style={styles.openChatButtonContainer}>
         <TouchableHighlight 
           style={styles.openChatButton}

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import ChatModal from '../components/ChatModal';
 import CustomHeaderWebView from '../components/CustomHeaderWebView';
 
 function PolicyScreen() {
@@ -8,10 +7,9 @@ function PolicyScreen() {
     <View style={{ flex: 1 }}>
       <CustomHeaderWebView
         source={{
-          uri: 'https://www.google.com/',
+          uri: 'https://mypolicy-qa6.dev-elephant.com/policy/action',
         }}
-      />
-      
+      />      
     </View>
   );
 }
