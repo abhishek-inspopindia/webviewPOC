@@ -8,61 +8,19 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { WebView } from 'react-native-webview';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+
+import FooterMenu from './components/FooterMenu';
+import ChatModal from './components/ChatModal';
 import CookieManager from '@react-native-cookies/cookies';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const CustomHeaderWebView = (props:any) => {
-  const { uri, onLoadStart, ...restProps } = props;
-  const [currentURI, setURI] = useState(props.source.uri);
-  const newSource = { ...props.source, uri: currentURI };
-
-  return (
-    <WebView
-      {...restProps}
-      source={newSource}
-      onShouldStartLoadWithRequest={(request) => {
-        // If we're loading the current URI, allow it to load
-        if (request.url === currentURI) return true;
-        // We're loading a new URL -- change state first
-        setURI(request.url);
-        return false;
-      }}
-      incognito={false}
-      sharedCookiesEnabled={true}
-    />
-  );
-};
-
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   // set a cookie
-  CookieManager.set('https://letsmakeindia.com/test/app.php', {
-    name: 'a_on',
-    value: 'c0a03305b16e4885b51c9cb114d47f65-r',
-    domain: 'letsmakeindia.com',
+  CookieManager.set('https://mypolicy-qa6.dev-elephant.com', {
+    name: 'src',
+    value: 'mobile',
+    domain: 'dev-elephant.com',
     path: '/',
     version: '1',
     expires: '2022-05-30T12:30:00.00-05:00'
@@ -70,10 +28,21 @@ const App = () => {
     console.log('CookieManager.set =>', done);
   });
 
-  CookieManager.set('https://letsmakeindia.com/test/app.php', {
-    name: 'r_t',
+  CookieManager.set('https://mypolicy-qa6.dev-elephant.com', {
+    name: 'a_on',
     value: 'c0a03305b16e4885b51c9cb114d47f65-r',
-    domain: 'letsmakeindia.com',
+    domain: 'dev-elephant.com',
+    path: '/',
+    version: '1',
+    expires: '2022-05-30T12:30:00.00-05:00'
+  }).then((done) => {
+    console.log('CookieManager.set =>', done);
+  });
+
+  CookieManager.set('https://mypolicy-qa6.dev-elephant.com', {
+    name: 'r_t',
+    value: '266e9cef637449389a3599879271df18-r',
+    domain: 'dev-elephant.com',
     path: '/',
     version: '1',
     expires: '2022-05-30T12:30:00.00-05:00'
@@ -82,23 +51,16 @@ const App = () => {
   });
 
   // Get cookies for a url
-  CookieManager.get('https://letsmakeindia.com/test/app.php')
+  CookieManager.get('https://mypolicy-qa6.dev-elephant.com')
   .then((cookies) => {
     console.log('CookieManager.get =>', cookies);
   });
-
-
-
+  
   return (
-    <CustomHeaderWebView
-      source={{
-        uri: 'https://letsmakeindia.com/test/app.php',
-        // headers: {
-        //   'Cookie': 'a_on=c0a03305b16e4885b51c9cb114d47f65-r;r_t=c0a03305b16e4885b51c9cb114d47f65-r',
-        //   //'Cookie': 'a_on=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;r_t=e7b75276c0064437ad7d2e13ae1f4806-r:domain=.dev-elephant.com:path=/;',
-        // },
-      }}
-    />
+    <NavigationContainer>
+      <FooterMenu />
+      <ChatModal />
+    </NavigationContainer>
   );
 };
 
